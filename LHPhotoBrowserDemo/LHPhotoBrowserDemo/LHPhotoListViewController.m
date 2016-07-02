@@ -51,6 +51,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LHPhotoListCell *cell = [LHPhotoListCell LHPhotoListCellWithTableView:tableView];
+    cell.superVc = self;
     
     cell.imgs = _imgsArray;
     cell.imgUrls = _imgUrlsArray;

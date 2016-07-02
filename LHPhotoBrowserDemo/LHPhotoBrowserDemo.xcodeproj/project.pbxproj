@@ -45,6 +45,7 @@
 		90CA24181CEB048A00AB5107 /* 77.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 90CA240F1CEB048A00AB5107 /* 77.jpg */; };
 		90CA24191CEB048A00AB5107 /* 88.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 90CA24101CEB048A00AB5107 /* 88.jpeg */; };
 		90CA241A1CEB048A00AB5107 /* 99.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 90CA24111CEB048A00AB5107 /* 99.jpeg */; };
+		B774CDE71D17A3CC005C83D3 /* LHPhotoTopBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B774CDE61D17A3CC005C83D3 /* LHPhotoTopBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,8 @@
 		90CA240F1CEB048A00AB5107 /* 77.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 77.jpg; sourceTree = "<group>"; };
 		90CA24101CEB048A00AB5107 /* 88.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 88.jpeg; sourceTree = "<group>"; };
 		90CA24111CEB048A00AB5107 /* 99.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 99.jpeg; sourceTree = "<group>"; };
+		B774CDE51D17A3CC005C83D3 /* LHPhotoTopBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPhotoTopBar.h; sourceTree = "<group>"; };
+		B774CDE61D17A3CC005C83D3 /* LHPhotoTopBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPhotoTopBar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,6 +289,8 @@
 				90CA23FA1CEAFC6C00AB5107 /* LHPhotoView.m */,
 				90CA23FC1CEAFCF500AB5107 /* LHProgressView.h */,
 				90CA23FD1CEAFCF500AB5107 /* LHProgressView.m */,
+				B774CDE51D17A3CC005C83D3 /* LHPhotoTopBar.h */,
+				B774CDE61D17A3CC005C83D3 /* LHPhotoTopBar.m */,
 			);
 			name = LHPhotoBrowser;
 			sourceTree = "<group>";
@@ -448,6 +453,7 @@
 				90CA23F21CEAFB7900AB5107 /* UIImageView+HighlightedWebCache.m in Sources */,
 				90CA23E61CEAFB7900AB5107 /* NSData+ImageContentType.m in Sources */,
 				90CA23EC1CEAFB7900AB5107 /* SDWebImageManager.m in Sources */,
+				B774CDE71D17A3CC005C83D3 /* LHPhotoTopBar.m in Sources */,
 				90CA24011CEB013600AB5107 /* LHNavigationController.m in Sources */,
 				90CA23EA1CEAFB7900AB5107 /* SDWebImageDownloader.m in Sources */,
 				90CA23F11CEAFB7900AB5107 /* UIImage+WebP.m in Sources */,
@@ -607,7 +613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = LHPhotoBrowserDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -620,7 +626,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = LHPhotoBrowserDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -696,6 +702,7 @@
 				90CA23BB1CEAFB4700AB5107 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		90CA23BC1CEAFB4700AB5107 /* Build configuration list for PBXNativeTarget "LHPhotoBrowserDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -704,6 +711,7 @@
 				90CA23BE1CEAFB4700AB5107 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		90CA23BF1CEAFB4700AB5107 /* Build configuration list for PBXNativeTarget "LHPhotoBrowserDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -712,6 +720,7 @@
 				90CA23C11CEAFB4700AB5107 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

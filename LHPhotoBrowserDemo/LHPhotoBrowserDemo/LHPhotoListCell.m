@@ -87,8 +87,10 @@
     bc.imgsArray = _imgContainerArray;
     bc.imgUrlsArray = _imgUrls;
     bc.tapImgIndex = view.tag;
+    bc.hideStatusBar = NO;
     
-    [bc show];
+//    [bc showWithPush:self.superVc]; //push方式
+    [bc show];                    //present方式
     
 }
 

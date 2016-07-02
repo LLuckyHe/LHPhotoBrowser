@@ -4,6 +4,7 @@
 模仿微博的展示方式
 支持网络图片加载
 支持单点退出、 双击局部放大、 捏合放大缩小、 横屏显示
+支持present以及push两种方式展现
 
 集成LHPhotoBrowser (How to use)
 
@@ -15,7 +16,9 @@ bc.imgUrlsArray = _imgUrls;                     //所有要显示图片的url   
 
 bc.tapImgIndex = index;                         //点击第几个图片进来的 index从0开始       (tap index, from zero)
 
-[bc show];       
+[bc show];  //present方式（weibo方式）
+
+[bc showWithPush:vc]; //push方式, vc为要跳转的控制器
 
 具体见Demo
 

@@ -14,6 +14,8 @@
 
 @property(nonatomic, strong)NSArray *imgUrls;
 
+@property(nonatomic, weak)UIViewController *superVc;
+
 + (id)LHPhotoListCellWithTableView:(UITableView *)tableView;
 
 + (CGFloat)cellHeight:(NSInteger)imgNum;

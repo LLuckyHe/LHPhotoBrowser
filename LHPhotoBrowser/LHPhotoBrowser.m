@@ -8,11 +8,13 @@
 
 #import "LHPhotoBrowser.h"
 #import "LHPhotoView.h"
+#import "LHPhotoTopBar.h"
 
 #define photoPadding 10
 
-@interface LHPhotoBrowser ()<LHPhotoViewDelegate, UIScrollViewDelegate>
+@interface LHPhotoBrowser ()<LHPhotoViewDelegate, UIScrollViewDelegate, UINavigationControllerDelegate>
 {
+    LHPhotoTopBar *_topBar;
     UIScrollView *_scrollView;
     NSMutableSet *_visiblePhotoViews;
     NSMutableSet *_reusablePhotoViews;
@@ -23,6 +25,7 @@
 @property(nonatomic, assign)NSInteger curImgIndex;
 @property(nonatomic, assign)UIInterfaceOrientationMask supportOrientation;
 @property(nonatomic, assign)BOOL isRotating;
+@property(nonatomic, assign)BOOL isPush;
 
 @end
 
@@ -111,6 +114,62 @@
     _scrollView.contentSize = CGSizeMake(_imgsArray.count * (bvW + photoPadding), bvH);
     _scrollView.contentOffset = CGPointMake(_tapImgIndex * _scrollView.bounds.size.width, 0);
     
+    _topBar = [[LHPhotoTopBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+    
+    if(_imgsArray.count > 1){
+        
+        [_topBar setPageNum:_tapImgIndex + 1 andAllPageNum:_imgsArray.count];
+        
+    }
+    
+    [self.view addSubview:_topBar];
+    
+}
+
+- (void)showWithPush:(UIViewController *)superVc
+{
+    if (!superVc) {
+        return;
+    }
+    
+    _isPush = YES;
+    
+    superVc.navigationController.delegate = self;
+    [superVc.navigationController pushViewController:self animated:YES];
+    
+    CGFloat bvW = self.scrollView.bounds.size.width - photoPadding;
+    CGFloat bvH = self.scrollView.bounds.size.height;
+    
+    for(int i=0;i<_imgsArray.count;i++){
+        
+        if (i == _tapImgIndex) {
+            [self showPhotoViewAtIndex:_tapImgIndex];
+        }
+    }
+    
+    _scrollView.contentSize = CGSizeMake(_imgsArray.count * (bvW + photoPadding), bvH);
+    _scrollView.contentOffset = CGPointMake(_tapImgIndex * _scrollView.bounds.size.width, 0);
+    
+    if(_imgsArray.count > 1){
+        
+        self.title = [NSString stringWithFormat:@"%d/%d", _tapImgIndex + 1, _imgsArray.count];
+        
+    }
+    
+//    _supportOrientation = UIInterfaceOrientationMaskAllButUpsideDown;
+//    _scrollView.hidden = NO;
+//    [UIViewController attemptRotationToDeviceOrientation];
+    
+//    _topBar = [[LHPhotoTopBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+//    
+//    if(_imgsArray.count > 1){
+//        
+//        [_topBar setPageNum:_tapImgIndex + 1 andAllPageNum:_imgsArray.count];
+//        
+//    }
+//    
+//    [self.view addSubview:_topBar];
+    
 }
 
 - (void)browserWillShow
@@ -198,6 +257,8 @@
     
     _scrollView.contentSize = CGSizeMake(_imgsArray.count * (bvW + 10), bvH);
     _scrollView.contentOffset = CGPointMake(curIndex * (bvW + 10), 0);
+    _topBar.frame = CGRectMake(0, 0, self.view.bounds.size.width, 64);
+    
 }
 
 - (void)showPhotoViewAtIndex:(NSInteger)index
@@ -287,10 +348,23 @@
     return photoView;
 }
 
+#pragma -mark navigationControllerDelegate
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    
+    _supportOrientation = UIInterfaceOrientationMaskAllButUpsideDown;
+    _scrollView.hidden = NO;
+    [UIViewController attemptRotationToDeviceOrientation];
+    
+}
+
 #pragma -mark photoViewDelegate
 
 - (void)photoViewSingleTap:(NSInteger)index
 {
+    if (_isPush) {
+        return;
+    }
     
     NSInteger curIndex = index - 1;
     
@@ -346,10 +420,36 @@
     _imageProgressArray[index] = [NSNumber numberWithFloat:progress];
 }
 
+- (void)updatePage
+{
+    CGRect visibleBounds = _scrollView.bounds;
+    CGFloat MidBoundary = CGRectGetMinX(visibleBounds) + (_scrollView.bounds.size.width - photoPadding) * .5;
+    int leftPage = MidBoundary / CGRectGetWidth(visibleBounds);
+    CGFloat rightPage = MidBoundary - leftPage * CGRectGetWidth(visibleBounds);
+    
+    if (rightPage > CGRectGetWidth(visibleBounds) - photoPadding / 2) {
+        
+        [_topBar setPageNum:(leftPage + 2) andAllPageNum:_imgsArray.count];
+        if (_isPush) {
+            self.title = [NSString stringWithFormat:@"%d/%d", (leftPage + 2), _imgsArray.count];
+        }
+        
+    } else {
+        
+        [_topBar setPageNum:(leftPage + 1) andAllPageNum:_imgsArray.count];
+        if (_isPush) {
+            self.title = [NSString stringWithFormat:@"%d/%d", (leftPage + 1), _imgsArray.count];
+        }
+        
+    }
+    
+}
+
 #pragma mark UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self showPhotos];
+    [self updatePage];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -368,7 +468,7 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    return YES;
+    return _hideStatusBar;
 }
 
 - (BOOL)shouldAutorotate

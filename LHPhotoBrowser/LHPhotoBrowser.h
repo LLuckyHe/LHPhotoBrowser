@@ -16,6 +16,9 @@
 
 @property(nonatomic, assign)NSInteger tapImgIndex;
 
+@property(nonatomic, assign)BOOL hideStatusBar;
+
 - (void)show;
 
+- (void)showWithPush:(UIViewController *)superVc;
 @end
